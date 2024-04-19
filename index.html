@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+    <link rel=”icon” href=“https://raw.githubusercontent.com/marisafish/NotepadWeb/main/favicon.ico”>
+    <title>ブラウザメモ帳</title>
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700&display=swap");
+
+html, body{
+    background-color: #00FFBC;
+    background-repeat: no-repeat;
+    background-position:60% 60%;
+    background-size:cover;
+}
+
+* {
+font-family: 'Zen Maru Gothic';
+}
+
+textarea{
+background-color: #fff;
+color: #FF5300;
+border-radius: 8px;
+border-style: none;
+background-image: url(https://previews.123rf.com/images/skafrica/skafrica0910/skafrica091000067/5798860-%E3%82%88%E3%81%8F%E4%BD%BF%E7%94%A8%E3%81%95%E3%82%8C%E3%82%8B%E6%9C%A8%E8%A3%BD%E3%81%BE%E3%81%AA%E6%9D%BF%E8%89%AF%E3%81%84%E3%83%86%E3%82%AF%E3%82%B9%E3%83%81%E3%83%A3%E8%83%8C%E6%99%AF%E3%82%92%E6%8F%90%E4%BE%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82.jpg);    /* 背景画像指定 */
+background-repeat: no-repeat;
+background-position:60% 60%;
+background-size:cover;
+}
+
+button{
+background-color: #00FF60;
+border-radius: 30px;
+width: 35%;
+height: 3.8%;
+transition-duration: .4s;
+}
+
+button:hover{
+transform: scale(1.1);
+}
+</style>
+<body>
+ <h1>ブラウザメモ帳</h1>
+ <h3>1</h3>
+ <input type="text" id="name1">
+  <textarea id="article" placeholder="ここに書き込みます" rows="70%" cols="55%"></textarea><br>
+  <h1>画像</h1><br>
+  <input id="file-sample" type="file"><br>
+  <img id="file-preview">
+  <button id="clear">クリアする</button>
+     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript">
+  var textarea = $("#article");
+  var input = $("#name1");
+let img = document.querySelector('img');
+
+
+  textarea.ready(function(){
+    textarea.val(localStorage.getItem("article"));
+  });
+
+  textarea.keyup(function(){
+    var value = textarea.val();
+    localStorage.setItem("article", value);
+  });
+
+  $("#clear").click(function(){
+    var result = window.confirm('リセットしても宜しいですか？');
+    
+    if( result ) {
+    textarea.val("");
+    input.val("");
+    localStorage.clear();
+    img.removeAttribute('src')
+    alert('クリアしました')
+    }
+    else {
+    alert('クリアしませんでした')
+    }
+  });
+  
+  input.ready(function(){
+  input.val(localStorage.getItem("name1"));
+  });
+  
+  input.keyup(function(){
+  var value = input.val();
+  localStorage.setItem("name1", value);
+  });
+  
+  document.getElementById('file-sample').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    var file = e.target.files[0];
+
+    // ファイルのブラウザ上でのURLを取得する
+    var blobUrl = window.URL.createObjectURL(file);
+
+    // img要素に表示
+    var img = document.getElementById('file-preview');
+    img.src = blobUrl;
+});
+  </script>
+</body>
+</html>
